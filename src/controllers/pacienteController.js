@@ -1,4 +1,4 @@
-const {Pacientes} = require ("../models")
+const {Pacientes} = require ("../models/pacientes")
  const pacienteController = {
     listarPaciente: async (req, res) => {
         const listarPaciente = await Pacientes.findAll();
@@ -27,8 +27,25 @@ const {Pacientes} = require ("../models")
             },
         });
 
-        res.json("Produto deletado");
+        res.json("Paciente deletado");
     },
+    async atualizarPaciente(req, res){
+        const { id } = req.params;
+        const { nome, email, idade} = req.body;
+        const pacienteAtualizado = await Pacientes.update(
+            { 
+            nome,
+            email,
+          idade
+        },
+        {
+            where:{
+            id,
+        },
+    }
+     );
+     res.json("Paciente atualizado com Sucesso")
+    }
 };
 
 module.exports = pacienteController;
